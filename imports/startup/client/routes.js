@@ -13,6 +13,21 @@ FlowRouter.route('/', {
   },
 });
 
+// FlowRouter.route('/room', {
+//   name: 'App.room',
+//   action() {
+//     this.render('App_body', 'App_room');
+//   },
+// });
+
+// FlowRouter.route('/game', {
+//   name: 'App.game',
+//   action() {
+//     this.render('App_body', 'App_game');
+//   },
+// });
+
+
 FlowRouter.notFound = {
   action() {
     this.render('App_body', 'App_notFound');

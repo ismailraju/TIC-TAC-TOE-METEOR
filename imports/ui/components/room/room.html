@@ -1,0 +1,16 @@
+<template name="room">
+    <button>Create Room</button>
+    <ul id="myul">
+
+        {{#each rooms}}
+        <li>Room {{_id}}
+
+            <button disabled="{{capacity}}" 
+          
+            > Join Room</button>
+
+        </li>
+        {{/each}}
+
+    </ul>
+</template>

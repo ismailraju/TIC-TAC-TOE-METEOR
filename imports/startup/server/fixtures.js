@@ -2,6 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Links } from '../../api/links/links.js';
+import { RoomCollection } from '../../api/rooms/rooms.js';
 
 Meteor.startup(() => {
   // if the Links collection is empty
@@ -30,5 +31,27 @@ Meteor.startup(() => {
     ];
 
     data.forEach(link => Links.insert(link));
+  }
+
+
+  if (RoomCollection.find().count() === 0) {
+    const data = [
+      {
+        createdAt: new Date(),
+        capacity: 2,
+        gameState: new Array(9).fill("empty"),
+        colorTurn: "cross",
+        winner: null
+      },
+      {
+        createdAt: new Date(),
+        capacity: 2,
+        gameState: new Array(9).fill("empty"),
+        colorTurn: "cross",
+        winner: null
+      }
+    ];
+
+    data.forEach(room => RoomCollection.insert(room));
   }
 });
