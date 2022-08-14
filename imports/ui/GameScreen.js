@@ -62,6 +62,15 @@ export const GameScreen = () => {
             alert(room.winner === color ? "You Won!" : "You Lost!!");
             history.push("/");
         }
+
+        if (room.colorTurn === color) {
+            console.log("Your turn");
+            document.body.style.backgroundColor = "green";
+
+        } else {
+            document.body.style.backgroundColor = "red";
+        }
+
     }, [room]);
 
     if (roomLoading) return "Loading...";
