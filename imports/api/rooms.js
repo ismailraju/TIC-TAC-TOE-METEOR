@@ -5,10 +5,10 @@ export const RoomCollection = new Mongo.Collection("rooms");
 function checkEndGame(gameState) {
   const sameColor = (x, y, z) =>
     new Set([gameState[x - 1], gameState[y - 1], gameState[z - 1]]).size ===
-      1 &&
+    1 &&
     gameState[x - 1] !== "empty" &&
     gameState[x - 1];
-  return (
+  const isWin = (
     sameColor(1, 2, 3) ||
     sameColor(4, 5, 6) ||
     sameColor(7, 8, 9) ||
@@ -18,8 +18,28 @@ function checkEndGame(gameState) {
     sameColor(1, 5, 9) ||
     sameColor(3, 5, 7)
   );
+
+  return isWin;
+
 }
 
+
+
+function checkDraw(gameState) {
+
+  return (
+    gameState[0] !== "empty" &&
+    gameState[1] !== "empty" &&
+    gameState[2] !== "empty" &&
+    gameState[3] !== "empty" &&
+    gameState[4] !== "empty" &&
+    gameState[5] !== "empty" &&
+    gameState[6] !== "empty" &&
+    gameState[7] !== "empty" &&
+    gameState[8] !== "empty"
+
+  );
+}
 Meteor.methods({
   createRoom() {
     const roomId = RoomCollection.insert({
@@ -64,7 +84,11 @@ Meteor.methods({
       throw new Meteor.Error("invalid-play");
     }
     const winner = checkEndGame(room.gameState);
+    console.log(">" + winner);
     if (winner && winner !== "empty") {
+
+
+
       return RoomCollection.findAndModify({
         query: { _id: roomId },
         update: { $set: { winner } },
@@ -72,6 +96,18 @@ Meteor.methods({
       });
     }
 
+    if (!winner && checkDraw(room.gameState)) {
+
+      return RoomCollection.findAndModify({
+        query: { _id: roomId },
+        update: { $set: {winner: "draw" } },
+        new: true
+      });
+    }
+
     return room;
+  },
+  deleteAllRoom() {
+    RoomCollection.remove({});
   }
 });

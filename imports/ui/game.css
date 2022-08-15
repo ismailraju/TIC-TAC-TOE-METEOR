@@ -4,17 +4,20 @@
   width: calc(100vw - 3px);
   height: calc(100vh - 6px);
 }
+
 .line {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: calc(100% / 3);
 }
+
 .slot {
   border: solid black 3px;
   flex-basis: calc(100% / 3);
   height: 100%;
 }
+
 html,
 body,
 body div,
@@ -87,4 +90,10 @@ video {
   font-size: 100%;
   vertical-align: baseline;
   background: transparent;
+}
+
+
+div.slot {
+  display: flex;
+  justify-content: center;
 }

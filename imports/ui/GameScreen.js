@@ -59,7 +59,7 @@ export const GameScreen = () => {
 
     useEffect(() => {
         if (room && room.winner) {
-            alert(room.winner === color ? "You Won!" : "You Lost!!");
+            alert(room.winner === color ? "You Won!" :(room.winner ==="draw"?"You Draw!!" :"You Lost!!"));
             history.push("/");
         }
 

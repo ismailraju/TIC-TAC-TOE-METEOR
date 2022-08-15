@@ -2,12 +2,11 @@ import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
 import { RoomCollection } from "../api/rooms";
 import { useHistory } from "react-router";
+import Button from 'react-bootstrap/Button';
 
 export const RoomList = () => {
   const history = useHistory();
   const listLoading = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
     const handle = Meteor.subscribe("rooms");
     return !handle.ready();
   }, []);
@@ -21,9 +20,16 @@ export const RoomList = () => {
           Meteor.call("createRoom");
         }}
       >
-        {" "}
-        Create Room{" "}
+
+        Create Room
       </button>
+      <Button
+        variant="danger"
+        onClick={() => {
+          Meteor.call("deleteAllRoom");
+        }}
+      >
+        Clear All Room      </Button>
       <ul>
         {rooms.map(({ _id, capacity, winner }) => (
           <li key="{_id}">
@@ -36,7 +42,7 @@ export const RoomList = () => {
                 Meteor.call(
                   "joinRoom",
                   { roomId: _id },
-                  (err, {room,color}) => {
+                  (err, { room, color }) => {
                     history.push(`/game/${room._id}`, { color });
                   }
                 );
